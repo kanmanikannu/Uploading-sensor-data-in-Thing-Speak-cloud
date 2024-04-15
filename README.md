@@ -1,3 +1,6 @@
+#### Name : Kanmani U
+#### Reg no : 212221040070
+
 # Uploading temperature sensor data in Thing Speak cloud
 
 # AIM:
@@ -71,10 +74,69 @@ Automatically act on your data and communicate using third-party services like T
 
 
 # PROGRAM:
+#include"ThingSpeak.h"
+#include <WiFi.h>
+#include "DHT.h"
 
+char ssid[]="xx";
+char pass[]="xyz";
+
+const int t=25;
+WiFiClient client;
+DHT dht(25, DHT11);
+
+unsigned long myChannelField = 2487172;
+const int ChannelField1 = 1 ; 
+const int ChannelField2 = 2 ;
+const char *myWriteAPIKey="mwa0000033516271W";
+
+void setup()
+{
+  Serial.begin(115200);
+  pinMode (t,OUTPUT);
+  WiFi.mode(WIFI_STA);
+  ThingSpeak.begin(client);
+  dht.begin();
+  delay(1000);
+}
+
+void loop()
+{
+  if(WiFi.status()!=WL_CONNECTED)
+  {
+    Serial.print("Attempting to connet to SSID: "); 
+    Serial.println(ssid);
+    while(WiFi.status() != WL_CONNECTED)
+    {
+      WiFi.begin(ssid, pass);
+      Serial.print(".");
+      delay(5000);
+    }
+    Serial.println("\nConnected");
+  }
+  float temperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
+  delay(1000);
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.println(" *C");
+  ThingSpeak.writeField(myChannelField, ChannelField1, temperature, myWriteAPIKey);
+  Serial.print("Humidity: ");
+  Serial.print(humidity);
+  Serial.println(" g.m-3");
+  ThingSpeak.writeField(myChannelField, ChannelField2, humidity, myWriteAPIKey);
+  delay(1000);
+}
 # CIRCUIT DIAGRAM:
+![iot exp3 circuit](https://github.com/kanmanikannu/Uploading-sensor-data-in-Thing-Speak-cloud/assets/114866367/a5b4b8df-bb4a-4a11-bc4b-2d482557eeaf)
+
 
 # OUTPUT:
+#### Serial Moniter
+![serial moniter](https://github.com/kanmanikannu/Uploading-sensor-data-in-Thing-Speak-cloud/assets/114866367/c3215780-b82c-4f16-9ea6-a077c5c88338)
+#### Thing Speak
+![thingspeak](https://github.com/kanmanikannu/Uploading-sensor-data-in-Thing-Speak-cloud/assets/114866367/e104a338-a966-48f1-8b8e-8b4c0bb680d7)
+
 
 # RESULT:
 
