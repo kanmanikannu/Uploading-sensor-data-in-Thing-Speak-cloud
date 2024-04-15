@@ -1,7 +1,7 @@
 #### Name : Kanmani U
 #### Reg no : 212221040070
 
-# Uploading temperature sensor data in Thing Speak cloud
+# EXP 03 Uploading temperature sensor data in Thing Speak cloud
 
 # AIM:
 To monitor the temperature sensor data in the Thing speak using an ESP32 controller.
@@ -74,6 +74,7 @@ Automatically act on your data and communicate using third-party services like T
 
 
 # PROGRAM:
+```
 #include"ThingSpeak.h"
 #include <WiFi.h>
 #include "DHT.h"
@@ -127,6 +128,7 @@ void loop()
   ThingSpeak.writeField(myChannelField, ChannelField2, humidity, myWriteAPIKey);
   delay(1000);
 }
+```
 # CIRCUIT DIAGRAM:
 ![iot exp3 circuit](https://github.com/kanmanikannu/Uploading-sensor-data-in-Thing-Speak-cloud/assets/114866367/a5b4b8df-bb4a-4a11-bc4b-2d482557eeaf)
 
